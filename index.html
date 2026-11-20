@@ -3,93 +3,608 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Página de prueba</title>
+  <title>Teko Mates</title>
+  <meta name="description" content="Teko Mates — mates artesanales, bombillas y kits materos. Pedí el tuyo por Instagram.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700;9..144,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f6f4ef;
-      --card: #ffffff;
-      --text: #1f1d1a;
-      --muted: #6b665e;
-      --accent: #d9622b;
-      --border: #e6e1d8;
-    }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #171614;
-        --card: #211f1c;
-        --text: #f1ede6;
-        --muted: #a39d92;
-        --accent: #f0844f;
-        --border: #34302b;
-      }
+      --cream: #f5efe3;
+      --cream-2: #ebe2d0;
+      --ink: #231a12;
+      --muted: #6e6153;
+      --yerba: #3f6b2f;
+      --yerba-light: #7ea35a;
+      --leather: #8a4b26;
+      --leather-dark: #5c2f16;
+      --silver: #c9c6bf;
+      --silver-dark: #8f8b82;
+      --card: #fffaf0;
+      --radius: 22px;
+      --shadow: 0 1px 2px rgba(35,26,18,.06), 0 12px 32px -12px rgba(35,26,18,.18);
     }
     * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 16px;
-      background: var(--bg);
-      color: var(--text);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: var(--cream);
+      color: var(--ink);
+      font-family: "DM Sans", system-ui, sans-serif;
+      line-height: 1.55;
+      overflow-x: hidden;
     }
+    html, body { overflow-x: clip; }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+    h1, h2, h3 { font-family: "Fraunces", Georgia, serif; line-height: 1.05; margin: 0; letter-spacing: -0.02em; }
+    .wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 24px; border-radius: 999px;
+      font-weight: 700; text-decoration: none; font-size: 1rem;
+      transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+      border: 2px solid transparent; cursor: pointer;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary { background: var(--yerba); color: #fff; box-shadow: 0 10px 24px -10px rgba(63,107,47,.8); }
+    .btn-primary:hover { background: #355b27; }
+    .btn-ghost { border-color: var(--ink); color: var(--ink); }
+    .btn-ghost:hover { background: var(--ink); color: var(--cream); }
+    .btn svg { width: 20px; height: 20px; }
+
+    /* ---------- Nav ---------- */
+    .nav {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(245,239,227,.82);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(35,26,18,.08);
+    }
+    .nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+    .logo { font-family: "Fraunces", serif; font-weight: 800; font-size: 1.6rem; text-decoration: none; letter-spacing: -0.03em; display: flex; align-items: center; gap: 8px; }
+    .logo span { color: var(--yerba); }
+    .logo svg { width: 30px; height: 30px; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { text-decoration: none; font-weight: 500; color: var(--muted); transition: color .2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-links a.btn-primary, .nav-links a.btn-primary:hover { color: #fff; }
+    .nav .btn { padding: 10px 18px; font-size: .92rem; }
+    @media (max-width: 760px) { .nav-links a:not(.btn) { display: none; } }
+
+    /* ---------- Hero ---------- */
+    .hero { position: relative; padding: 64px 0 40px; overflow: hidden; }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+    .eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--card); border: 1px solid var(--cream-2);
+      padding: 6px 14px; border-radius: 999px; font-size: .88rem; font-weight: 500; color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .eyebrow i { width: 8px; height: 8px; border-radius: 50%; background: var(--yerba-light); display: inline-block; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 rgba(126,163,90,.6);} 50% { box-shadow: 0 0 0 6px rgba(126,163,90,0);} }
+    .hero h1 { font-size: clamp(2.8rem, 7vw, 5.4rem); font-weight: 800; }
+    .hero h1 em { font-style: italic; color: var(--leather); font-weight: 700; }
+    .hero h1 .under { position: relative; white-space: nowrap; }
+    .hero h1 .under svg { position: absolute; left: 0; bottom: -0.12em; width: 100%; height: .3em; }
+    .hero p.lead { font-size: 1.18rem; color: var(--muted); max-width: 30ch; margin: 24px 0 32px; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-art { position: relative; aspect-ratio: 1; max-width: 480px; justify-self: center; width: 100%; }
+    .hero-art .blob { position: absolute; inset: 6%; background: var(--yerba); border-radius: 46% 54% 52% 48% / 52% 44% 56% 48%; animation: morph 12s ease-in-out infinite; }
+    .hero-art .blob.b2 { inset: 10%; background: var(--yerba-light); opacity: .35; animation-duration: 16s; animation-direction: reverse; }
+    @keyframes morph {
+      0%,100% { border-radius: 46% 54% 52% 48% / 52% 44% 56% 48%; transform: rotate(0deg); }
+      50% { border-radius: 58% 42% 40% 60% / 44% 58% 42% 56%; transform: rotate(8deg); }
+    }
+    .hero-art .mate-big { position: absolute; inset: 8% 14% 4%; animation: float 5s ease-in-out infinite; filter: drop-shadow(0 24px 24px rgba(0,0,0,.25)); }
+    @keyframes float { 0%,100% { transform: translateY(0) rotate(-3deg);} 50% { transform: translateY(-12px) rotate(2deg);} }
+    .steam path { fill: none; stroke: #fff; stroke-width: 4; stroke-linecap: round; opacity: 0; animation: steam 3.5s ease-in-out infinite; }
+    .steam path:nth-child(2) { animation-delay: 1.1s; }
+    .steam path:nth-child(3) { animation-delay: 2.2s; }
+    @keyframes steam { 0% { opacity: 0; transform: translateY(10px);} 30% { opacity: .75;} 100% { opacity: 0; transform: translateY(-30px);} }
+    .sticker {
+      position: absolute; background: var(--card); border-radius: 16px; box-shadow: var(--shadow);
+      padding: 10px 14px; font-weight: 700; font-size: .9rem; display: flex; align-items: center; gap: 8px;
+      animation: float 6s ease-in-out infinite;
+    }
+    .sticker.s1 { top: 8%; left: -4%; animation-delay: -2s; }
+    .sticker.s2 { bottom: 12%; right: -4%; animation-delay: -4s; }
+    .sticker b { font-size: 1.3rem; }
+    .leaf { position: absolute; width: 38px; color: var(--yerba-light); opacity: .55; animation: drift 9s ease-in-out infinite; }
+    @keyframes drift { 0%,100% { transform: translate(0,0) rotate(0);} 50% { transform: translate(10px,-16px) rotate(25deg);} }
+    @media (max-width: 860px) {
+      .hero .wrap { grid-template-columns: 1fr; }
+      .hero { padding-top: 40px; }
+      .hero-art { max-width: 360px; }
+      .sticker.s1 { left: 0; } .sticker.s2 { right: 0; }
+    }
+
+    /* ---------- Marquee ---------- */
+    .marquee { background: var(--ink); color: var(--cream); overflow: hidden; padding: 18px 0; transform: rotate(-1.5deg); margin: 40px -10px; }
+    .marquee-track { display: flex; gap: 48px; width: max-content; animation: scroll 28s linear infinite; font-family: "Fraunces", serif; font-size: 1.5rem; font-weight: 700; }
+    .marquee-track span { display: flex; align-items: center; gap: 48px; white-space: nowrap; }
+    .marquee-track span::after { content: "✦"; color: var(--yerba-light); }
+    @keyframes scroll { to { transform: translateX(-50%); } }
+
+    /* ---------- Sections ---------- */
+    section { padding: 80px 0; }
+    .section-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; margin-bottom: 44px; flex-wrap: wrap; }
+    .section-head h2 { font-size: clamp(2.2rem, 5vw, 3.6rem); font-weight: 800; }
+    .section-head h2 em { color: var(--yerba); font-style: italic; }
+    .section-head p { color: var(--muted); max-width: 38ch; margin: 0; font-size: 1.05rem; }
+    .kicker { text-transform: uppercase; letter-spacing: .14em; font-size: .8rem; font-weight: 700; color: var(--leather); margin-bottom: 12px; display: block; }
+
+    /* ---------- Catalog ---------- */
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+    .chip { font: inherit; font-weight: 500; padding: 9px 18px; border-radius: 999px; border: 1.5px solid var(--cream-2); background: var(--card); cursor: pointer; transition: all .2s; color: var(--ink); }
+    .chip:hover { border-color: var(--ink); }
+    .chip.active { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; }
     .card {
-      width: 100%;
-      max-width: 440px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 28px;
-      text-align: center;
+      background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      transition: transform .3s ease, box-shadow .3s ease, opacity .3s ease;
+      display: flex; flex-direction: column;
     }
-    h1 { margin: 0 0 8px; font-size: 1.8rem; }
-    p { margin: 0 0 24px; color: var(--muted); line-height: 1.5; }
-    .count {
-      font-size: 3rem;
-      font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 16px;
-      font-variant-numeric: tabular-nums;
+    .card:hover { transform: translateY(-6px) rotate(-.4deg); box-shadow: 0 1px 2px rgba(35,26,18,.06), 0 24px 40px -14px rgba(35,26,18,.3); }
+    .card.hide { display: none; }
+    .card-art { aspect-ratio: 4/3.4; display: grid; place-items: center; position: relative; }
+    .card-art svg { height: 82%; transition: transform .4s ease; }
+    .card:hover .card-art svg { transform: scale(1.06) rotate(-4deg); }
+    .card-art .tag { position: absolute; top: 14px; left: 14px; background: var(--card); padding: 4px 12px; border-radius: 999px; font-size: .78rem; font-weight: 700; }
+    .card-body { padding: 20px 22px 22px; display: flex; flex-direction: column; flex: 1; }
+    .card-body h3 { font-size: 1.45rem; margin-bottom: 6px; }
+    .card-body p { color: var(--muted); margin: 0 0 18px; font-size: .95rem; flex: 1; }
+    .card-foot { display: flex; justify-content: space-between; align-items: center; }
+    .price { font-weight: 700; font-size: 1.05rem; }
+    .price small { display: block; font-weight: 400; color: var(--muted); font-size: .78rem; }
+    .card-foot a { text-decoration: none; font-weight: 700; font-size: .9rem; padding: 9px 16px; border-radius: 999px; background: var(--cream); transition: background .2s, color .2s; }
+    .card-foot a:hover { background: var(--yerba); color: #fff; }
+    .bg-a { background: #e6d6bb; } .bg-b { background: #cfdcb9; } .bg-c { background: #e8c9ae; }
+    .bg-d { background: #d9d4c8; } .bg-e { background: #efe0c2; } .bg-f { background: #c4d3ae; }
+
+    /* ---------- Features ---------- */
+    .features { background: var(--yerba); color: var(--cream); border-radius: 36px; margin: 0 12px; position: relative; overflow: hidden; }
+    .features .section-head h2 em { color: #d9e8b8; }
+    .features .section-head p { color: rgba(245,239,227,.75); }
+    .features .kicker { color: #d9e8b8; }
+    .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .feat { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); border-radius: var(--radius); padding: 28px; }
+    .feat .ico { width: 54px; height: 54px; border-radius: 16px; background: var(--cream); color: var(--yerba); display: grid; place-items: center; margin-bottom: 20px; }
+    .feat .ico svg { width: 28px; height: 28px; }
+    .feat h3 { font-size: 1.4rem; margin-bottom: 8px; }
+    .feat p { margin: 0; color: rgba(245,239,227,.78); }
+    @media (max-width: 860px) { .feat-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Steps ---------- */
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; counter-reset: step; }
+    .step { position: relative; padding: 30px 26px; border-radius: var(--radius); background: var(--card); box-shadow: var(--shadow); }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      font-family: "Fraunces", serif; font-weight: 800; font-size: 4.5rem; line-height: 1;
+      color: transparent; -webkit-text-stroke: 2px var(--leather); display: block; margin-bottom: 14px;
     }
-    .buttons { display: flex; gap: 8px; justify-content: center; }
-    button {
-      font: inherit;
-      padding: 10px 18px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: transparent;
-      color: var(--text);
-      cursor: pointer;
+    .step h3 { font-size: 1.35rem; margin-bottom: 6px; }
+    .step p { margin: 0; color: var(--muted); }
+    @media (max-width: 860px) { .steps { grid-template-columns: 1fr; } }
+
+    /* ---------- Curado ---------- */
+    .curado { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; align-items: start; }
+    .curado-intro h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; margin-bottom: 18px; }
+    .curado-intro h2 em { color: var(--leather); }
+    .curado-intro p { color: var(--muted); font-size: 1.05rem; }
+    .tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+    .timeline { list-style: none; margin: 0; padding: 0; }
+    .timeline li { display: grid; grid-template-columns: 44px 1fr; gap: 16px; padding-bottom: 22px; position: relative; }
+    .timeline li:not(:last-child)::after { content: ""; position: absolute; left: 21px; top: 44px; bottom: 0; width: 2px; background: var(--cream-2); }
+    .timeline .dot { width: 44px; height: 44px; border-radius: 50%; background: var(--card); border: 2px solid var(--yerba); display: grid; place-items: center; font-weight: 700; color: var(--yerba); }
+    .timeline h4 { margin: 8px 0 4px; font-size: 1.05rem; }
+    .timeline p { margin: 0; color: var(--muted); font-size: .95rem; }
+    .panel { display: none; }
+    .panel.active { display: block; animation: fadeUp .4s ease; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: none; } }
+    @media (max-width: 860px) { .curado { grid-template-columns: 1fr; } }
+
+    /* ---------- FAQ ---------- */
+    .faq { max-width: 780px; margin: 0 auto; }
+    .faq details { background: var(--card); border-radius: 18px; margin-bottom: 12px; box-shadow: var(--shadow); overflow: hidden; }
+    .faq summary { list-style: none; cursor: pointer; padding: 20px 24px; font-weight: 700; font-size: 1.08rem; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after { content: "+"; font-size: 1.6rem; font-weight: 400; color: var(--yerba); transition: transform .3s; flex-shrink: 0; }
+    .faq details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { margin: 0; padding: 0 24px 22px; color: var(--muted); }
+
+    /* ---------- CTA ---------- */
+    .cta { text-align: center; }
+    .cta-box {
+      background: var(--ink); color: var(--cream); border-radius: 36px; padding: 72px 24px; position: relative; overflow: hidden;
     }
-    button.primary {
-      background: var(--accent);
-      border-color: var(--accent);
-      color: #fff;
+    .cta-box h2 { font-size: clamp(2.4rem, 6vw, 4.4rem); font-weight: 800; margin-bottom: 16px; }
+    .cta-box h2 em { color: var(--yerba-light); }
+    .cta-box p { color: rgba(245,239,227,.7); max-width: 44ch; margin: 0 auto 32px; font-size: 1.1rem; }
+    .cta-box .btn-primary { font-size: 1.1rem; padding: 16px 30px; }
+    .handle { display: block; margin-top: 20px; font-family: "Fraunces", serif; font-size: 1.3rem; color: rgba(245,239,227,.55); }
+    .cta-box .ring { position: absolute; border: 2px dashed rgba(126,163,90,.35); border-radius: 50%; animation: spin 40s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---------- Footer ---------- */
+    footer { padding: 40px 0 48px; color: var(--muted); font-size: .92rem; }
+    footer .wrap { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; }
+
+    /* ---------- Reveal ---------- */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
     }
-    button:active { transform: scale(0.97); }
-    footer { margin-top: 24px; font-size: 0.85rem; color: var(--muted); }
   </style>
 </head>
 <body>
-  <main class="card">
-    <h1>¡Hola, mundo! 👋</h1>
-    <p>Esta es una página de prueba hecha desde Claude Code. Si la estás viendo, funciona.</p>
-    <div class="count" id="count">0</div>
-    <div class="buttons">
-      <button class="primary" id="sumar">Sumar +1</button>
-      <button id="reset">Reiniciar</button>
+
+  <!-- ===== SVG defs: mate shapes ===== -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <linearGradient id="silver" x1="0" x2="1">
+        <stop offset="0" stop-color="#8f8b82"/><stop offset=".35" stop-color="#f1efe9"/><stop offset=".6" stop-color="#c9c6bf"/><stop offset="1" stop-color="#7d7970"/>
+      </linearGradient>
+      <linearGradient id="leather" x1="0" x2="1">
+        <stop offset="0" stop-color="#5c2f16"/><stop offset=".45" stop-color="#9a5a30"/><stop offset="1" stop-color="#4a2410"/>
+      </linearGradient>
+      <linearGradient id="wood" x1="0" x2="1">
+        <stop offset="0" stop-color="#6b3b1c"/><stop offset=".5" stop-color="#b07444"/><stop offset="1" stop-color="#5a2f15"/>
+      </linearGradient>
+      <linearGradient id="black" x1="0" x2="1">
+        <stop offset="0" stop-color="#151210"/><stop offset=".45" stop-color="#3b3430"/><stop offset="1" stop-color="#110e0c"/>
+      </linearGradient>
+      <linearGradient id="gourd" x1="0" x2="1">
+        <stop offset="0" stop-color="#7a5a2c"/><stop offset=".45" stop-color="#c49a5a"/><stop offset="1" stop-color="#6a4a20"/>
+      </linearGradient>
+
+      <!-- Imperial -->
+      <symbol id="m-imperial" viewBox="0 0 200 240">
+        <path d="M112 84 L156 8" stroke="url(#silver)" stroke-width="7" stroke-linecap="round"/>
+        <rect x="150" y="2" width="16" height="10" rx="4" fill="url(#silver)" transform="rotate(30 158 7)"/>
+        <path d="M40 112 C40 70 160 70 160 112 C160 176 136 210 100 210 C64 210 40 176 40 112Z" fill="var(--body, url(#leather))"/>
+        <path d="M52 130 C60 170 80 196 100 198" stroke="rgba(255,255,255,.12)" stroke-width="2" fill="none" stroke-dasharray="4 5"/>
+        <path d="M148 130 C140 170 120 196 100 198" stroke="rgba(255,255,255,.12)" stroke-width="2" fill="none" stroke-dasharray="4 5"/>
+        <ellipse cx="100" cy="78" rx="52" ry="9" fill="#3f6b2f"/>
+        <ellipse cx="96" cy="76" rx="30" ry="4" fill="#7ea35a"/>
+        <rect x="46" y="76" width="108" height="22" rx="7" fill="url(#silver)"/>
+        <path d="M54 87 h92" stroke="#8f8b82" stroke-width="1.5" stroke-dasharray="2 4"/>
+        <rect x="70" y="204" width="60" height="16" rx="5" fill="url(#silver)"/>
+      </symbol>
+
+      <!-- Camionero -->
+      <symbol id="m-camionero" viewBox="0 0 200 240">
+        <path d="M118 92 L160 14" stroke="url(#silver)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M28 124 C28 84 172 84 172 124 C172 182 142 212 100 212 C58 212 28 182 28 124Z" fill="var(--body, url(#gourd))"/>
+        <path d="M60 150 q40 30 80 0" stroke="rgba(0,0,0,.12)" stroke-width="3" fill="none"/>
+        <ellipse cx="100" cy="94" rx="66" ry="11" fill="#3f6b2f"/>
+        <ellipse cx="94" cy="92" rx="38" ry="5" fill="#7ea35a"/>
+        <rect x="32" y="92" width="136" height="16" rx="6" fill="url(#silver)"/>
+      </symbol>
+
+      <!-- Torpedo -->
+      <symbol id="m-torpedo" viewBox="0 0 200 240">
+        <path d="M108 70 L146 6" stroke="url(#silver)" stroke-width="7" stroke-linecap="round"/>
+        <path d="M62 82 L138 82 C144 146 128 214 100 222 C72 214 56 146 62 82Z" fill="var(--body, url(#black))"/>
+        <path d="M72 120 L128 120 M70 150 L130 150" stroke="url(#silver)" stroke-width="3"/>
+        <ellipse cx="100" cy="68" rx="38" ry="7" fill="#3f6b2f"/>
+        <rect x="58" y="64" width="84" height="20" rx="6" fill="url(#silver)"/>
+      </symbol>
+
+      <!-- Bombilla -->
+      <symbol id="m-bombilla" viewBox="0 0 200 240">
+        <path d="M60 210 L150 24" stroke="url(#silver)" stroke-width="9" stroke-linecap="round"/>
+        <rect x="140" y="14" width="22" height="14" rx="6" fill="url(#silver)" transform="rotate(26 151 21)"/>
+        <ellipse cx="62" cy="206" rx="22" ry="12" fill="url(#silver)" transform="rotate(-26 62 206)"/>
+        <g fill="#8f8b82" transform="rotate(-26 62 206)">
+          <circle cx="50" cy="206" r="2"/><circle cx="58" cy="206" r="2"/><circle cx="66" cy="206" r="2"/><circle cx="74" cy="206" r="2"/>
+        </g>
+        <rect x="96" y="110" width="22" height="12" rx="4" fill="#c9a24a" transform="rotate(-64 107 116)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- ===== NAV ===== -->
+  <header class="nav">
+    <div class="wrap">
+      <a href="#" class="logo" aria-label="Teko Mates">
+        <svg viewBox="0 0 200 240"><use href="#m-imperial"/></svg>
+        teko<span>.</span>
+      </a>
+      <nav class="nav-links">
+        <a href="#catalogo">Catálogo</a>
+        <a href="#comprar">Cómo comprar</a>
+        <a href="#curado">Curado</a>
+        <a href="#faq">Preguntas</a>
+        <a class="btn btn-primary" href="https://www.instagram.com/teko.matess/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          Seguinos
+        </a>
+      </nav>
     </div>
-    <footer id="fecha"></footer>
-  </main>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <svg class="leaf" style="top:14%;left:46%" viewBox="0 0 40 40"><path fill="currentColor" d="M4 36C4 16 16 4 36 4 36 24 24 36 4 36Z"/></svg>
+    <svg class="leaf" style="bottom:10%;left:6%;animation-delay:-3s;width:28px" viewBox="0 0 40 40"><path fill="currentColor" d="M4 36C4 16 16 4 36 4 36 24 24 36 4 36Z"/></svg>
+    <div class="wrap">
+      <div>
+        <span class="eyebrow"><i></i> Pedidos abiertos por Instagram</span>
+        <h1>Mates con <em>alma</em>,<br>hechos para <span class="under">compartir<svg viewBox="0 0 300 20" preserveAspectRatio="none"><path d="M2 14 C 80 2, 200 2, 298 12" stroke="#7ea35a" stroke-width="6" fill="none" stroke-linecap="round"/></svg></span>.</h1>
+        <p class="lead">Mates artesanales, bombillas y kits materos para que cada ronda sea un ritual.</p>
+        <div class="hero-cta">
+          <a href="#catalogo" class="btn btn-primary">Ver catálogo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener" class="btn btn-ghost">Escribinos</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <div class="blob"></div>
+        <div class="blob b2"></div>
+        <svg class="mate-big" viewBox="0 -40 200 280">
+          <g class="steam">
+            <path d="M85 40 q-10 -15 0 -30 q10 -15 0 -30"/>
+            <path d="M100 36 q-10 -15 0 -30 q10 -15 0 -30"/>
+            <path d="M115 40 q-10 -15 0 -30 q10 -15 0 -30"/>
+          </g>
+          <use href="#m-imperial" width="200" height="240"/>
+        </svg>
+        <div class="sticker s1"><b>🧉</b> Hecho a mano</div>
+        <div class="sticker s2"><b>✨</b> Personalizables</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MARQUEE ===== -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>Imperiales</span><span>Camioneros</span><span>Torpedos</span><span>Bombillas</span><span>Kits materos</span><span>Grabados</span>
+      <span>Imperiales</span><span>Camioneros</span><span>Torpedos</span><span>Bombillas</span><span>Kits materos</span><span>Grabados</span>
+    </div>
+  </div>
+
+  <!-- ===== CATÁLOGO ===== -->
+  <section id="catalogo">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="kicker">Catálogo</span>
+          <h2>Elegí tu <em>compañero</em></h2>
+        </div>
+        <p>Cada pieza es única: puede variar en veta, color o forma. Así se nota que está hecha a mano.</p>
+      </div>
+
+      <div class="filters reveal" role="tablist">
+        <button class="chip active" data-filter="all">Todos</button>
+        <button class="chip" data-filter="mate">Mates</button>
+        <button class="chip" data-filter="bombilla">Bombillas</button>
+        <button class="chip" data-filter="kit">Kits</button>
+      </div>
+
+      <div class="grid">
+        <article class="card reveal" data-cat="mate">
+          <div class="card-art bg-a"><span class="tag">Más pedido</span><svg viewBox="0 0 200 240"><use href="#m-imperial"/></svg></div>
+          <div class="card-body">
+            <h3>Imperial</h3>
+            <p>Calabaza forrada en cuero, virola cincelada y base de alpaca. El clásico de los clásicos.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="mate">
+          <div class="card-art bg-b"><svg viewBox="0 0 200 240"><use href="#m-camionero"/></svg></div>
+          <div class="card-body">
+            <h3>Camionero</h3>
+            <p>Boca ancha y calabaza grande, para cebadas largas y rondas que no terminan.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="mate">
+          <div class="card-art bg-d"><span class="tag">Nuevo</span><svg viewBox="0 0 200 240"><use href="#m-torpedo"/></svg></div>
+          <div class="card-body">
+            <h3>Torpedo</h3>
+            <p>Silueta alta y elegante, ideal para quien toma con poca yerba y mucha onda.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="mate">
+          <div class="card-art bg-c"><svg viewBox="0 0 200 240" style="--body:url(#wood)"><use href="#m-imperial"/></svg></div>
+          <div class="card-body">
+            <h3>Algarrobo</h3>
+            <p>Madera noble torneada a mano. Aporta un sabor suave y dura toda la vida.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="bombilla">
+          <div class="card-art bg-e"><svg viewBox="0 0 200 240"><use href="#m-bombilla"/></svg></div>
+          <div class="card-body">
+            <h3>Bombilla de alpaca</h3>
+            <p>Pico de rey o plana, con filtro que no se tapa. El detalle que completa tu mate.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+
+        <article class="card reveal" data-cat="kit">
+          <div class="card-art bg-f"><span class="tag">Para regalar</span>
+            <svg viewBox="0 0 320 240" style="height:78%">
+              <use href="#m-camionero" x="0" y="20" width="170" height="204"/>
+              <rect x="190" y="40" width="70" height="180" rx="16" fill="#231a12"/>
+              <rect x="200" y="22" width="50" height="26" rx="8" fill="url(#silver)"/>
+              <rect x="190" y="110" width="70" height="30" fill="#3f6b2f"/>
+              <rect x="268" y="120" width="44" height="100" rx="8" fill="#c49a5a"/>
+              <rect x="268" y="120" width="44" height="22" rx="8" fill="#8a4b26"/>
+            </svg>
+          </div>
+          <div class="card-body">
+            <h3>Kit matero</h3>
+            <p>Mate + bombilla + termo + yerbera. Todo listo para salir a matear o para regalar.</p>
+            <div class="card-foot"><span class="price">Consultar<small>precio por DM</small></span><a href="https://ig.me/m/teko.matess" target="_blank" rel="noopener">Pedir →</a></div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="features">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="kicker">Por qué Teko</span>
+          <h2>Hecho con <em>tiempo</em>,<br>como el buen mate.</h2>
+        </div>
+        <p>No hacemos mates en serie. Elegimos cada calabaza, cada cuero y cada costura.</p>
+      </div>
+      <div class="feat-grid">
+        <div class="feat reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg></div>
+          <h3>100% artesanal</h3>
+          <p>Cada mate pasa por manos expertas: forrado, cosido y terminado uno por uno.</p>
+        </div>
+        <div class="feat reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></div>
+          <h3>Personalizado</h3>
+          <p>Grabá un nombre, una fecha o un dibujo. Ideal para regalos que no se olvidan.</p>
+        </div>
+        <div class="feat reveal">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h4l3 3v5h-7V8Z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+          <h3>Te lo mandamos</h3>
+          <p>Coordinamos el envío por DM para que tu mate llegue sano y salvo.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CÓMO COMPRAR ===== -->
+  <section id="comprar">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <span class="kicker">Cómo comprar</span>
+          <h2>Fácil, como <em>cebar</em> uno.</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step reveal"><h3>Elegí</h3><p>Mirá el catálogo o nuestras publicaciones en Instagram y elegí el que más te guste.</p></div>
+        <div class="step reveal"><h3>Escribinos</h3><p>Mandanos un DM con el modelo. Te pasamos precio, stock y opciones de grabado.</p></div>
+        <div class="step reveal"><h3>Mateá</h3><p>Pagás, coordinamos la entrega y a disfrutar. Ah, y no te olvides de curarlo 👇</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CURADO ===== -->
+  <section id="curado" style="padding-top:20px">
+    <div class="wrap curado">
+      <div class="curado-intro reveal">
+        <span class="kicker">Guía rápida</span>
+        <h2>Cómo <em>curar</em> tu mate</h2>
+        <p>Un mate bien curado dura años y tiene mejor sabor. Elegí el material de tu mate y seguí los pasos.</p>
+      </div>
+      <div class="reveal">
+        <div class="tabs">
+          <button class="chip active" data-tab="calabaza">Calabaza</button>
+          <button class="chip" data-tab="madera">Madera</button>
+        </div>
+        <ol class="timeline panel active" id="tab-calabaza">
+          <li><span class="dot">1</span><div><h4>Llenalo de yerba usada</h4><p>Cargá el mate con yerba húmeda hasta el borde.</p></div></li>
+          <li><span class="dot">2</span><div><h4>Agua tibia, no hirviendo</h4><p>Completá con agua tibia y dejalo reposar 24 horas.</p></div></li>
+          <li><span class="dot">3</span><div><h4>Raspá la piel interna</h4><p>Vaciálo y con una cuchara sacá suavemente la telita del interior.</p></div></li>
+          <li><span class="dot">4</span><div><h4>Repetí y secá</h4><p>Repetí el proceso 1 o 2 veces más y dejalo secar boca abajo. ¡Listo!</p></div></li>
+        </ol>
+        <ol class="timeline panel" id="tab-madera">
+          <li><span class="dot">1</span><div><h4>Untá el interior</h4><p>Pasá un poco de manteca o aceite por dentro para sellar la madera.</p></div></li>
+          <li><span class="dot">2</span><div><h4>Cargá yerba y agua tibia</h4><p>Llenalo con yerba y agua tibia y dejalo reposar 24 horas.</p></div></li>
+          <li><span class="dot">3</span><div><h4>Vaciá y repetí</h4><p>Tirá el contenido y repetí el proceso un día más.</p></div></li>
+          <li><span class="dot">4</span><div><h4>Secado</h4><p>Dejalo secar boca abajo en un lugar ventilado, lejos del sol directo.</p></div></li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal" style="justify-content:center;text-align:center">
+        <div>
+          <span class="kicker">Preguntas frecuentes</span>
+          <h2>¿Dudas? <em>Cebamos</em> respuestas.</h2>
+        </div>
+      </div>
+      <div class="faq">
+        <details class="reveal"><summary>¿Cómo hago un pedido?</summary><p>Mandanos un mensaje directo por Instagram con el modelo que te gustó y te respondemos con precio, stock y formas de pago.</p></details>
+        <details class="reveal"><summary>¿Hacen envíos?</summary><p>Sí. Coordinamos el envío por DM según tu ubicación.</p></details>
+        <details class="reveal"><summary>¿Puedo personalizar mi mate?</summary><p>¡Claro! Podés pedir grabados con nombres, iniciales, fechas o diseños. Consultanos por las opciones disponibles.</p></details>
+        <details class="reveal"><summary>¿Cómo cuido mi mate después de usarlo?</summary><p>Vaciálo después de cada uso, no lo dejes con yerba húmeda por días y dejalo secar boca abajo. Evitá lavarlo con detergente.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CTA ===== -->
+  <section class="cta">
+    <div class="wrap">
+      <div class="cta-box reveal">
+        <div class="ring" style="width:420px;height:420px;top:-200px;left:-140px"></div>
+        <div class="ring" style="width:300px;height:300px;bottom:-160px;right:-80px;animation-direction:reverse"></div>
+        <h2>¿Arrancamos la <em>ronda</em>?</h2>
+        <p>Seguinos en Instagram para ver los nuevos modelos, sorteos y novedades.</p>
+        <a class="btn btn-primary" href="https://www.instagram.com/teko.matess/" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+          Ir a Instagram
+        </a>
+        <span class="handle">@teko.matess</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <a href="#" class="logo" style="font-size:1.3rem">teko<span>.</span></a>
+      <span>© <span id="year"></span> Teko Mates · Hecho con 🧉</span>
+    </div>
+  </footer>
 
   <script>
-    let n = 0;
-    const count = document.getElementById('count');
-    document.getElementById('sumar').addEventListener('click', () => { count.textContent = ++n; });
-    document.getElementById('reset').addEventListener('click', () => { n = 0; count.textContent = n; });
-    document.getElementById('fecha').textContent =
-      'Hoy es ' + new Date().toLocaleDateString('es-AR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Filtros del catálogo
+    document.querySelectorAll('[data-filter]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.grid .card').forEach(card => {
+          card.classList.toggle('hide', f !== 'all' && card.dataset.cat !== f);
+        });
+      });
+    });
+
+    // Tabs de curado
+    document.querySelectorAll('[data-tab]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-tab]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Aparición al scrollear
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach((el, i) => {
+      el.style.transitionDelay = (i % 3) * 80 + 'ms';
+      io.observe(el);
+    });
   </script>
 </body>
 </html>
